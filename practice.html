@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Edexcel Pure Maths &middot; Practice</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\(','\)']], displayMath: [['$$','$$'], ['\[','\]']] }
+};
+</script>
+<script src="mathjax/tex-mml-svg.js" async></script>
+
+<link rel="stylesheet" href="_theme.css">
+<link rel="stylesheet" href="_theme_slides.css">
+<style>
+/* Layout unique to the practice page; menu/card grid/progress/nav come from teaching-kit */
+.grid{margin-top:8px}
+.qbox{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px 28px;min-height:230px}
+.qhead{color:var(--dim);font-size:13px;margin-bottom:8px}
+.qtext{font-size:18px;line-height:1.85}
+.abox{margin-top:18px;border-left:3px solid var(--acc2);padding:12px 16px;display:none}
+.abox.on{display:block}
+.kbd{color:var(--dim);font-size:12.5px;margin-top:10px}
+.kbd b{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 6px}
+</style></head>
+<body>
+<div class="wrap">
+<div class="side">
+  <h1>Edexcel Pure Maths<br>Practice</h1>
+  <div class="sub">5 topics &middot; 36 questions</div>
+  <div class="grp">Controls</div>
+  <a class="item" href="#" onclick="backMenu();return false;">&larr; Back to topic menu</a>
+  <div class="grp" style="margin-top:16px">Other pages</div>
+  <a class="item" href="index.html">&larr; Home</a>
+  <a class="item" href="slides.html">Class slides</a>
+  <a class="item" href="guide.html">Study guide</a>
+  <a class="item" href="formula.html">Formula book</a>
+</div>
+<div class="main">
+
+<div class="menu on" id="menu">
+  <div class="hero">
+  <h1>Practice</h1>
+  <div class="meta">Pick a topic to play its questions one by one. Answers are hidden by default;
+  press <b>Space</b> to show/hide, <b>&larr; &rarr;</b> to flip, <b>Esc</b> back to this menu.</div>
+  </div>
+  <div id="groups"></div>
+</div>
+
+<div class="stage" id="stage">
+  <div class="toolbar">
+    <button class="btn" onclick="backMenu()">&larr; Menu</button>
+    <button class="btn" onclick="toggleAns()">Show/Hide answer</button>
+    <button class="btn" onclick="prev()">Previous</button>
+    <button class="btn" onclick="next_()">Next</button>
+    <span class="btn" id="pos">—</span>
+  </div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="qbox">
+    <div class="qhead" id="qhead">—</div>
+    <div class="qtext" id="qtext">—</div>
+    <div class="abox" id="abox"><b style="color:var(--acc2)">Answer</b>
+      <div id="atext" style="margin-top:6px"></div></div>
+  </div>
+  <div class="nav">
+    <button class="btn" onclick="prev()">&larr; Previous</button>
+    <button class="btn" onclick="toggleAns()">Space: answer</button>
+    <button class="btn" onclick="next_()">Next &rarr;</button>
+  </div>
+  <div class="kbd">Shortcuts: <b>&larr;</b> previous &middot; <b>&rarr;</b> next &middot; <b>Space</b> answer &middot; <b>Esc</b> back to menu</div>
+</div>
+
+</div></div>
+<script>
+const DATA = {"decks": [{"key": "proof", "title": "Proof · Mathematical Proof", "group": "P", "qs": [{"n": 1, "q": "<p>Prove that, for any integer $n$, $n^3-n$ is divisible by $3$.</p>", "a": "<p>$n^3-n=n(n-1)(n+1)$, the product of three consecutive integers. Among any three consecutive integers one is a multiple of $3$, so the product is divisible by $3$. $\\square$</p>"}, {"n": 2, "q": "<p>Prove that the sum of the squares of two odd integers is even but not divisible by $4$.</p>", "a": "<p>Odd integers: $2a+1$, $2b+1$. $(2a+1)^2+(2b+1)^2=4a^2+4a+1+4b^2+4b+1=4(a^2+a+b^2+b)+2$, which is $4k+2$: even, and not a multiple of $4$. $\\square$</p>"}, {"n": 3, "q": "<p>Prove that, for any integer $n$, $n^2+n+1$ is odd.</p>", "a": "<p>$n^2+n=n(n+1)$ is the product of two consecutive integers, hence even; write $n^2+n=2k$. Then $n^2+n+1=2k+1$, which is odd. $\\square$</p>"}, {"n": 4, "q": "<p>Give a counter example to: \"For all real $x$ and $y$, if $x^2=y^2$ then $x=y$.\"</p>", "a": "<p>Take $x=1$, $y=-1$. Then $x^2=y^2=1$ but $x\\neq y$.</p>"}, {"n": 5, "q": "<p>Prove by exhaustion that, for integer $n$ with $1\\le n\\le 5$, $n^2-n+11$ is prime.</p>", "a": "<p>$n=1$: $11$; $n=2$: $13$; $n=3$: $17$; $n=4$: $23$; $n=5$: $31$ — all prime. $\\square$</p>"}, {"n": 6, "q": "<p>State, for each, whether it is an equation or an identity: $2(x+3)\\equiv 2x+6$; $2(x+3)=10$.</p>", "a": "<p>The first is an identity (true for all $x$, written with $\\equiv$); the second is an equation (true only at $x=2$).</p>"}, {"n": 7, "q": "<p>Prove that the difference between the squares of two consecutive integers is odd.</p>", "a": "<p>Consecutive integers $n$ and $n+1$. $(n+1)^2-n^2=2n+1$, which is odd for every integer $n$. $\\square$</p>"}]}, {"key": "proof_contradiction", "title": "Proof by Contradiction", "group": "P", "qs": [{"n": 1, "q": "<p>Prove that $\\sqrt{3}$ is irrational.</p>", "a": "<p>Assume $\\sqrt{3}=p/q$ in lowest terms. Then $3q^2=p^2$, so $p^2$ is divisible by $3$, hence $p$ is divisible by $3$: $p=3k$. Then $3q^2=9k^2$, so $q^2=3k^2$, so $q$ is divisible by $3$. Thus $p$ and $q$ share a factor $3$, a contradiction. So $\\sqrt{3}$ is irrational. $\\square$</p>"}, {"n": 2, "q": "<p>Prove that, if $n^2$ is a multiple of $3$, then $n$ is a multiple of $3$.</p>", "a": "<p>Assume $n$ is not a multiple of $3$. Then $n=3k\\pm1$, so $n^2=9k^2\\pm6k+1=3(3k^2\\pm2k)+1$, which is not a multiple of $3$ — contradiction. Hence $n$ is a multiple of $3$. $\\square$</p>"}, {"n": 3, "q": "<p>Prove that, if $a$ is rational and $b$ is irrational, then $a+b$ is irrational.</p>", "a": "<p>Assume, for contradiction, that $a+b$ is rational. Then $(a+b)-a=b$ is the difference of two rationals, so $b$ is rational — contradicting that $b$ is irrational. Therefore $a+b$ is irrational. $\\square$</p>"}, {"n": 4, "q": "<p>Prove that $\\sqrt{5}$ is irrational.</p>", "a": "<p>Assume $\\sqrt{5}=p/q$ in lowest terms; then $5q^2=p^2$, so $5\\mid p$, write $p=5k$; then $5q^2=25k^2$, so $q^2=5k^2$, so $5\\mid q$ — contradiction with lowest terms. Hence $\\sqrt{5}$ is irrational. $\\square$</p>"}, {"n": 5, "q": "<p>Prove that, if $n^2$ is odd, then $n$ is odd.</p>", "a": "<p>Assume $n$ is even: $n=2k$, so $n^2=4k^2$, which is even — contradiction with $n^2$ odd. Hence $n$ is odd. $\\square$</p>"}, {"n": 6, "q": "<p>Prove that the equation $x^2-2=0$ has no rational solution.</p>", "a": "<p>A rational solution would mean $\\sqrt{2}=x$ is rational, contradicting Example 1. Therefore there is no rational solution. $\\square$</p>"}]}, {"key": "indices_surds", "title": "Indices & Surds", "group": "P", "qs": [{"n": 1, "q": "<p>Simplify $3^{4}\\times 3^{2}\\div 3^{5}$.</p>", "a": "<p>$3^{4+2-5}=3^{1}=3$.</p>"}, {"n": 2, "q": "<p>Simplify $(2^{3})^{4}\\div 2^{5}$.</p>", "a": "<p>$2^{12}\\div 2^{5}=2^{7}=128$.</p>"}, {"n": 3, "q": "<p>Simplify $\\sqrt{45}$.</p>", "a": "<p>$\\sqrt{45}=\\sqrt{9\\times5}=3\\sqrt{5}$.</p>"}, {"n": 4, "q": "<p>Simplify $2\\sqrt{12}-3\\sqrt{3}$.</p>", "a": "<p>$2\\sqrt{12}=2\\sqrt{4\\times3}=4\\sqrt{3}$; $4\\sqrt{3}-3\\sqrt{3}=\\sqrt{3}$.</p>"}, {"n": 5, "q": "<p>Write $\\dfrac{1}{\\sqrt{5}}$ with a rational denominator.</p>", "a": "<p>$\\dfrac{1}{\\sqrt{5}}=\\dfrac{\\sqrt{5}}{5}$.</p>"}, {"n": 6, "q": "<p>Write $\\dfrac{3}{1-\\sqrt{2}}$ in the form $a+b\\sqrt{2}$ with rational $a,b$.</p>", "a": "<p>$\\dfrac{3(1+\\sqrt{2})}{(1-\\sqrt{2})(1+\\sqrt{2})}=\\dfrac{3+3\\sqrt{2}}{1-2}=-3-3\\sqrt{2}$. So $a=-3$, $b=-3$.</p>"}, {"n": 7, "q": "<p>Write $\\dfrac{4}{\\sqrt{3}+1}$ in the form $a+b\\sqrt{3}$ with rational $a,b$.</p>", "a": "<p>$\\dfrac{4(\\sqrt{3}-1)}{(\\sqrt{3}+1)(\\sqrt{3}-1)}=\\dfrac{4\\sqrt{3}-4}{3-1}=2\\sqrt{3}-2$. So $a=-2$, $b=2$.</p>"}, {"n": 8, "q": "<p>Simplify $9^{3}\\div 3^{4}$.</p>", "a": "<p>$9^{3}=(3^{2})^{3}=3^{6}$; $3^{6}\\div3^{4}=3^{2}=9$.</p>"}]}, {"key": "quadratics", "title": "Quadratics", "group": "P", "qs": [{"n": 1, "q": "<p>For what values of $k$ does $x^2-4x+k=0$ have two distinct real roots?</p>", "a": "<p>$\\Delta=16-4k&gt;0$ ⇒ $k&lt;4$.</p>"}, {"n": 2, "q": "<p>Find the discriminant of $2x^2-3x+1=0$ and state how many real roots it has.</p>", "a": "<p>$\\Delta=9-8=1&gt;0$ → two distinct real roots.</p>"}, {"n": 3, "q": "<p>Complete the square for $x^2+4x-1$ and state the turning point.</p>", "a": "<p>$(x+2)^2-5$. Turning point $(-2,-5)$.</p>"}, {"n": 4, "q": "<p>Solve $x^2-5x+6=0$ by factorising.</p>", "a": "<p>$(x-2)(x-3)=0$ ⇒ $x=2$ or $x=3$.</p>"}, {"n": 5, "q": "<p>Solve $2x^2+5x-12=0$ using the quadratic formula.</p>", "a": "<p>$x=\\dfrac{-5\\pm\\sqrt{25+96}}{4}=\\dfrac{-5\\pm11}{4}$ ⇒ $x=\\dfrac{3}{2}$ or $x=-4$.</p>"}, {"n": 6, "q": "<p>Solve $x^2+4x-7=0$ by completing the square, giving surd form.</p>", "a": "<p>$(x+2)^2-11=0$ ⇒ $(x+2)^2=11$ ⇒ $x=-2\\pm\\sqrt{11}$.</p>"}, {"n": 7, "q": "<p>Solve $e^{2x}-5e^x+6=0$ (a hidden quadratic with $u=e^x$).</p>", "a": "<p>$u^2-5u+6=0=(u-2)(u-3)$ ⇒ $e^x=2$ or $e^x=3$ ⇒ $x=\\ln2$ or $x=\\ln3$.</p>"}, {"n": 8, "q": "<p>Write $2x^2-8x+5$ in the form $a(x+p)^2+q$.</p>", "a": "<p>$2(x^2-4x)+5=2[(x-2)^2-4]+5=2(x-2)^2-3$.</p>"}]}, {"key": "simultaneous", "title": "Simultaneous Equations", "group": "P", "qs": [{"n": 1, "q": "<p>Solve by elimination: $x+y=9$, $x-y=3$.</p>", "a": "<p>Add: $2x=12$ ⇒ $x=6$; then $y=3$. Check: $6-3=3$ ✓.</p>"}, {"n": 2, "q": "<p>Solve by substitution: $y=2x-1$, $x+y=5$.</p>", "a": "<p>$x+(2x-1)=5$ ⇒ $3x=6$ ⇒ $x=2$; $y=3$. Check: $2+3=5$ ✓.</p>"}, {"n": 3, "q": "<p>Solve $3x+2y=12$ and $x-y=1$.</p>", "a": "<p>From the second, $x=y+1$. Substitute: $3(y+1)+2y=12$ ⇒ $5y+3=12$ ⇒ $y=\\dfrac{9}{5}$; then $x=\\dfrac{14}{5}$. Check: $\\dfrac{42}{5}+\\dfrac{18}{5}=12$ ✓.</p>"}, {"n": 4, "q": "<p>Solve $2x+3y=17$ and $3x-2y=6$.</p>", "a": "<p>Multiply the first by $2$ and the second by $3$: $4x+6y=34$, $9x-6y=18$. Add: $13x=52$ ⇒ $x=4$; then $2(4)+3y=17$ ⇒ $y=3$. Check second: $12-6=6$ ✓.</p>"}, {"n": 5, "q": "<p>Solve the quadratic pair: $y=x^2-1$ and $y=2x+2$.</p>", "a": "<p>$2x+2=x^2-1$ ⇒ $x^2-2x-3=0=(x-3)(x+1)$ ⇒ $x=3$ ⇒ $y=8$; $x=-1$ ⇒ $y=0$. Solutions $(3,8)$ and $(-1,0)$.</p>"}, {"n": 6, "q": "<p>Solve $y=4-x$ and $x^2+y=10$.</p>", "a": "<p>Substitute $y=4-x$: $x^2+4-x=10$ ⇒ $x^2-x-6=0=(x-3)(x+2)$ ⇒ $x=3$ ⇒ $y=1$; $x=-2$ ⇒ $y=6$. Solutions $(3,1)$ and $(-2,6)$.</p>"}, {"n": 7, "q": "<p>Solve $x+y=6$ and $xy=8$.</p>", "a": "<p>From the first, $y=6-x$. Substitute: $x(6-x)=8$ ⇒ $x^2-6x+8=0$ ⇒ $(x-2)(x-4)=0$ ⇒ $x=2$ ⇒ $y=4$; $x=4$ ⇒ $y=2$. Solutions $(2,4)$ and $(4,2)$.</p>"}]}], "gmeta": {"P": {"title": "Pure Mathematics (5 topics)", "label": "Pure · Simultaneous Equations"}}, "grank": ["P"]};
+let cur = null, idx = 0, showAns = false;
+
+/* MathJax loads asynchronously: after dynamically inserting content we must
+   re-typeset. A single Promise chain serialises all typeset calls so fast
+   question changes don't trigger MathJax "Typeset already in progress"; retry
+   by polling until MathJax has finished loading. */
+let _tp = Promise.resolve();
+function typeset(id){
+  const run = function() {
+    const el = id ? [document.getElementById(id)] : undefined;
+    return window.MathJax.typesetPromise(el);
+  };
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    _tp = _tp.then(run).catch(function(e){ /* ignore a local typeset error */ });
+  } else {
+    setTimeout(function(){ typeset(id); }, 120);
+  }
+}
+
+function renderMenu(){
+  const box = document.getElementById('groups');
+  let h = '';
+  DATA.grank.forEach(function(g){
+    h += '<h3>' + DATA.gmeta[g].title + '</h3><div class="grid">';
+    DATA.decks.filter(function(d){return d.group===g;}).forEach(function(d){
+      h += '<div class="card" onclick="openDeck(\'' + d.key + '\')"><div class="t">' +
+           d.title + '</div><div class="c">' + d.qs.length + ' questions</div></div>';
+    });
+    h += '</div>';
+  });
+  box.innerHTML = h;
+  typeset('groups');
+}
+
+function openDeck(key){
+  cur = DATA.decks.find(function(d){return d.key===key;});
+  idx = 0; showAns = false;
+  document.getElementById('menu').classList.remove('on');
+  document.getElementById('stage').classList.add('on');
+  render();
+}
+function backMenu(){
+  document.getElementById('stage').classList.remove('on');
+  document.getElementById('menu').classList.add('on');
+}
+function render(){
+  const q = cur.qs[idx];
+  document.getElementById('qhead').textContent = cur.title + '  ·  Question ' + q.n + ' / ' + cur.qs.length;
+  document.getElementById('qtext').innerHTML = q.q;
+  document.getElementById('atext').innerHTML = q.a;
+  document.getElementById('abox').classList.toggle('on', showAns);
+  document.getElementById('pos').textContent = (idx+1) + ' / ' + cur.qs.length;
+  document.getElementById('prog').style.width = ((idx+1)/cur.qs.length*100) + '%';
+  typeset('qbox');
+}
+function toggleAns(){ showAns = !showAns; document.getElementById('abox').classList.toggle('on', showAns);
+  if (showAns) typeset('atext'); }
+function prev(){ if(!cur) return; idx = (idx - 1 + cur.qs.length) % cur.qs.length; showAns=false; render(); }
+function next_(){ if(!cur) return; idx = (idx + 1) % cur.qs.length; showAns=false; render(); }
+document.addEventListener('keydown', function(e){
+  if(!cur) return;
+  if(e.key === 'ArrowRight'){ next_(); }
+  else if(e.key === 'ArrowLeft'){ prev(); }
+  else if(e.key === ' '){ e.preventDefault(); toggleAns(); }
+  else if(e.key === 'Escape'){ backMenu(); }
+});
+renderMenu();
+</script>
+</body></html>
